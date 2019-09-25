@@ -6,11 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".splash">
 
-    <ImageView
+   <!-- <ImageView
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:src="@drawable/dr"
         android:layout_centerInParent="true"
+        />-->
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/gif"
+        android:src="@drawable/gifd"
+        android:scaleType="centerCrop"
+
         />
 
 </RelativeLayout>

@@ -2,6 +2,7 @@ package creo.com.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import creo.com.driver.utils.Global;
 
@@ -33,6 +36,7 @@ public class resetpassword extends AppCompatActivity {
     TextView reset;
     Context context=this;
     String phone_no = null;
+    private ProgressDialog dialog ;
 
     private String URLline = Global.BASE_URL+"driver/driver_change_password/";
 
@@ -48,13 +52,35 @@ public class resetpassword extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         phone_no = bundle.getString("phone_no");
         Log.d("phone","mm"+phone_no);
+        dialog=new ProgressDialog(resetpassword.this,R.style.MyAlertDialogStyle);
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetuser();
+                if(password.getText().toString().equals("")){
+                    password.setError("Please enter new password to reset");
+                }
+                else if(password.getText().toString().length()<6 &&!isValidPassword(password.getText().toString())){
+                    password.setError("Password should contain uppercase,lowercase,number,special character");
+                }else{
+                    dialog.setMessage("Loading..");
+                    dialog.show();
+                    resetuser();
+                }
+
             }
         });
+    }
+    public static boolean isValidPassword(final String password) {
+
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
     }
 
     private void resetuser(){
@@ -62,6 +88,7 @@ public class resetpassword extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         Toast.makeText(resetpassword.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {

@@ -52,7 +52,8 @@
         android:layout_height="50dp"
         android:id="@+id/description"
         android:gravity="center"
-
+        android:maxLength="4"
+        android:inputType="number"
         android:layout_below="@+id/texty"
         android:background="@drawable/edit"
         android:layout_marginStart="20dp"

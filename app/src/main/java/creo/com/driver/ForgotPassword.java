@@ -2,6 +2,7 @@ package creo.com.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,6 +35,7 @@ public class ForgotPassword extends AppCompatActivity {
     TextView contin;
     Context context=this;
     private String URLline = Global.BASE_URL+"driver/driver_forget_password/";
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +46,20 @@ public class ForgotPassword extends AppCompatActivity {
 
         phone=findViewById(R.id.description);
         contin=findViewById(R.id.tt);
+        dialog=new ProgressDialog(ForgotPassword.this,R.style.MyAlertDialogStyle);
 
         contin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                forgotuser();
+                if(phone.getText().toString().equals("")){
+                    phone.setError("Please Enter the Phone Number");
+                }
+                else {
+                    dialog.setMessage("Loading..");
+                    dialog.show();
+                    forgotuser();
+                }
+
             }
         });
     }
@@ -57,6 +69,7 @@ public class ForgotPassword extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         Toast.makeText(ForgotPassword.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -66,7 +79,7 @@ public class ForgotPassword extends AppCompatActivity {
                             Log.d("status","mm"+status);
                             Log.d("otp","mm"+ot);
                             if(status.equals("200")){
-                                Toast.makeText(ForgotPassword.this, ot, Toast.LENGTH_LONG).show();
+                              //  Toast.makeText(ForgotPassword.this, ot, Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(ForgotPassword.this, otpverify.class);
                                 intent.putExtra("phone_no",phone.getText().toString());
                                 startActivity(intent);
@@ -102,6 +115,7 @@ public class ForgotPassword extends AppCompatActivity {
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000,0,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
 
     }

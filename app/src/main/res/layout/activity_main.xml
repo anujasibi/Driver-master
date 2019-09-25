@@ -13,40 +13,42 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <pl.droidsonroids.gif.GifImageView
+            <!--<pl.droidsonroids.gif.GifImageView
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
                 android:id="@+id/gif"
                 android:src="@drawable/driver"
                 android:scaleType="centerCrop"
 
-                />
+                />-->
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="530dp"
+                android:id="@+id/img"
+                android:src="@drawable/taxih"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/text"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:text="Welcome, SignIn or Register to Continue"
                 android:textColor="#000"
-                android:layout_below="@+id/gif"
+                android:layout_below="@+id/img"
                 />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="150dp"
                 android:id="@+id/card"
                 android:layout_below="@+id/text"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                app:cardElevation="2dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginStart="5dp"
                 android:layout_alignParentLeft="true"
                 android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="10dp"
                 android:background="@drawable/sel"
                 android:layout_alignParentStart="true">
                 <RelativeLayout
@@ -77,15 +79,12 @@
                 android:layout_width="150dp"
                 android:id="@+id/card1"
                 android:layout_below="@+id/text"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                app:cardElevation="2dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="5dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+
                 >
                 <RelativeLayout
                     android:layout_width="match_parent"

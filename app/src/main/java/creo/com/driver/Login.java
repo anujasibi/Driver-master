@@ -2,6 +2,7 @@ package creo.com.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class Login extends AppCompatActivity {
     TextInputEditText phoneno,password;
     Context context=this;
     String phone_no = null;
+    private ProgressDialog dialog ;
 
     private String URLline = Global.BASE_URL+"driver/driver_login/";
 
@@ -46,16 +48,34 @@ public class Login extends AppCompatActivity {
         phoneno=findViewById(R.id.name);
         password=findViewById(R.id.namee);
         forgot=findViewById(R.id.forgot);
+        dialog=new ProgressDialog(Login.this,R.style.MyAlertDialogStyle);
 
-        phoneno.setError("Enter your registered number");
-        password.setError("Enter your password");
+
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                */
-                loginuser();
+
+                if(phoneno.getText().toString().equals("")){
+                    phoneno.setError("Enter your registered number");
+
+                }
+                else if(password.getText().toString().equals(""))
+                {
+                    password.setError("Enter your password");
+                }
+                else if(phoneno.getText().toString().equals("")&&password.getText().toString().equals(""))
+                {
+                    Toast.makeText(Login.this,"All fields are required",Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    dialog.setMessage("Loading..");
+                    dialog.show();
+                    loginuser();
+
+                }
+
 
             }
         });
@@ -72,6 +92,7 @@ public class Login extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         Toast.makeText(Login.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {

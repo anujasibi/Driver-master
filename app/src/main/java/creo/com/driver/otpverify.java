@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -45,6 +46,7 @@ public class otpverify extends AppCompatActivity implements
     String phone_no = null;
     Context context=this;
     private String URLline = Global.BASE_URL+"driver/driver_phone_verifying/";
+    private ProgressDialog dialog ;
 
 
     @Override
@@ -56,6 +58,7 @@ public class otpverify extends AppCompatActivity implements
 
         otpe=findViewById(R.id.description);
         verify=findViewById(R.id.tt);
+        dialog=new ProgressDialog(otpverify.this,R.style.MyAlertDialogStyle);
 
         Bundle bundle = getIntent().getExtras();
         phone_no = bundle.getString("phone_no");
@@ -72,7 +75,8 @@ public class otpverify extends AppCompatActivity implements
                 }
                 if (otpe.getText().toString().length() == 4) {
 
-
+                    dialog.setMessage("Loading..");
+                    dialog.show();
                     verifynewuser();
                 }
 
@@ -85,17 +89,26 @@ public class otpverify extends AppCompatActivity implements
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         Toast.makeText(otpverify.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String ot = jsonObject.getString("message");
+                            String ot = jsonObject.optString("message");
+                            String code=jsonObject.optString("code");
                             Log.d("otp","mm"+ot);
-                            Toast.makeText(otpverify.this, ot, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(otpverify.this, verified.class);
-                            intent.putExtra("phone_no", phone_no);
-                            Log.d("pppppp","mm"+phone_no);
-                            startActivity(intent);
+
+                            if(code.equals("200")){
+                                Toast.makeText(otpverify.this, ot, Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(otpverify.this, verified.class);
+                                intent.putExtra("phone_no", phone_no);
+                                Log.d("pppppp","mm"+phone_no);
+                                startActivity(intent);
+                            }
+                            else {
+                                Toast.makeText(otpverify.this, ot, Toast.LENGTH_LONG).show();
+                            }
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
