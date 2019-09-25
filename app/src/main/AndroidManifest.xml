@@ -23,7 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".registernew"></activity>
+        <activity android:name=".Uploadlicense"></activity>
+        <activity android:name=".Documents" />
+        <activity android:name=".registernew" />
         <activity android:name=".verified" />
         <activity android:name=".resetpassword" />
 
