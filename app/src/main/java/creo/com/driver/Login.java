@@ -165,6 +165,7 @@ public class Login extends AppCompatActivity {
                             String ot = jsonObject.optString("message");
                             String status=jsonObject.optString("code");
                             String data=jsonObject.optString("data");
+                            String cab=jsonObject.optString("cab-data");
                             String approval=jsonObject.optString("approval");
                             JSONArray jsonObject1 = new JSONArray(data);
                             JSONObject jsonObject2 = jsonObject1.optJSONObject(0);
@@ -175,13 +176,36 @@ public class Login extends AppCompatActivity {
                             sessionManager.setUser_pcc(pcc);
                             sessionManager.setId(address_proof);
                             sessionManager.setLicence(license);
-                            Log.d("data","mm"+data);
-                            Log.d("approval",",mm"+approval);
-                            Log.d("json","mm"+jsonObject1);
-                            Log.d("fe","mm"+fields);
-                            Log.d("license","mm"+license);
-                            Log.d("address","mm"+address_proof);
-                            Log.d("pcc","mm"+sessionManager.getUser_pcc());
+                            Log.d("data","mm"+cab);
+
+                            JSONArray jsonObject3 = new JSONArray(cab);
+                            JSONObject jsonObject4 = jsonObject3.optJSONObject(0);
+                            JSONObject fieldcab = jsonObject4.optJSONObject("fields");
+                            final String make=fieldcab.optString("make");
+                            final String cab_model=fieldcab.optString("cab_model");
+                            final String year=fieldcab.optString("year");
+                            final String color=fieldcab.optString("color");
+                            final String car_image=fieldcab.optString("car_image");
+                            final String license_plate=fieldcab.optString("license_plate");
+                            final String rc_book=fieldcab.optString("rc_book");
+                            final String tourist_permit=fieldcab.optString("tourist_permit");
+                            final String vehicle_insurance=fieldcab.optString("vehicle_insurance");
+                            final String taxi_permit=fieldcab.optString("taxi_permit");
+                            final String vehicle_fitness=fieldcab.optString("vehicle_fitness");
+                            final String noc=fieldcab.optString("noc");
+
+                            sessionManager.setMake(make);
+                            sessionManager.setModel(cab_model);
+                            sessionManager.setColor(color);
+                            sessionManager.setYear(year);
+                            sessionManager.setPlate(license_plate);
+
+                            Log.d("json","mm"+jsonObject3);
+                            Log.d("fe","mm"+fieldcab);
+                            Log.d("make","mm"+make);
+
+
+
 
                             if(status.equals("200")){
 
@@ -211,8 +235,31 @@ public class Login extends AppCompatActivity {
                                     AlertDialog alert = builder.create();
 alert.show();
                                 }
+                                if(make.equals("")||cab_model.equals("")||year.equals("")||color.equals("")||car_image.equals("")||license_plate.equals("")||rc_book.equals("")||tourist_permit.equals("")||vehicle_insurance.equals("")||taxi_permit.equals("")||vehicle_fitness.equals("")||noc.equals("")){
+                                    //  sessionManager.setUser_pcc("");
+                                    Toast.makeText(Login.this, ot, Toast.LENGTH_LONG).show();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                                    builder.setMessage("Please Upload your vechicle documents to continue")
+
+                                            .setCancelable(false)
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+
+                                                    Intent intent = new Intent(Login.this, vehicledocument.class);
+                                                    //  Log.d("pppppp","mm"+token);
+                                                    startActivity(intent);
+                                                    Animatoo.animateSlideLeft(Login.this);
+                                                    //  MyActivity.this.finish();
+                                                }
+                                            });
+
+
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
+                                }
                             }
-                            if(!(license.equals("")||address_proof.equals("")||pcc.equals(""))){
+                            if(!(license.equals("")||address_proof.equals("")||pcc.equals("")||make.equals("")||cab_model.equals("")||year.equals("")||color.equals("")||car_image.equals("")||license_plate.equals("")||rc_book.equals("")||tourist_permit.equals("")||vehicle_insurance.equals("")||taxi_permit.equals("")||vehicle_fitness.equals("")||noc.equals(""))){
                                 if(approval.equals("not verified")){
                                     Toast.makeText(Login.this,"Please wait",Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(Login.this, Approval.class);

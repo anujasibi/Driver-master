@@ -47,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
+                    android:id="@+id/vechile"
                     android:layout_marginBottom="16dp"
                     android:layout_rowWeight="1"
                     android:layout_marginLeft="16dp"

@@ -70,15 +70,15 @@ public class vehicledetails extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String ot = jsonObject.optString("message");
-                            String status=jsonObject.optString("status");
+                            String status=jsonObject.optString("code");
                             Log.d("otp","mm"+ot);
                             if(status.equals("200")){
                                 Toast.makeText(vehicledetails.this, ot, Toast.LENGTH_LONG).show();
-                               // Intent intent = new Intent(vehicledetails.this, MainActivity.class);
-                              //  startActivity(intent);
+                                Intent intent = new Intent(vehicledetails.this, vehicledocument.class);
+                                startActivity(intent);
                             }
                             else{
-                                Toast.makeText(vehicledetails.this, "Invalid Password."+ot, Toast.LENGTH_LONG).show();
+                                Toast.makeText(vehicledetails.this, "Failed to add."+ot, Toast.LENGTH_LONG).show();
 
 
                             }

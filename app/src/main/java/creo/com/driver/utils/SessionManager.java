@@ -38,5 +38,41 @@ public class SessionManager {
         return  sharedPreferences.getString("license","");
     }
 
+    public void setMake(String make){
+        sharedPreferences.edit().putString("make",make).commit();
+    }
+    public String getMake(){
+
+            return  sharedPreferences.getString("make","");
+    }
+    public void setModel(String model){
+        sharedPreferences.edit().putString("model",model).commit();
+    }
+    public String getModel(){
+
+        return  sharedPreferences.getString("model","");
+    }
+    public void setYear(String year){
+        sharedPreferences.edit().putString("year",year).commit();
+    }
+    public String getYear(){
+
+        return  sharedPreferences.getString("year","");
+    }
+    public void setPlate(String plate){
+        sharedPreferences.edit().putString("plate",plate).commit();
+    }
+    public String getPlate(){
+
+        return  sharedPreferences.getString("plate","");
+    }
+    public void setColor(String color){
+        sharedPreferences.edit().putString("color",color).commit();
+    }
+    public String getColor(){
+
+        return  sharedPreferences.getString("color","");
+    }
+
 
 }
