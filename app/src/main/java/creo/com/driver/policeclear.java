@@ -37,6 +37,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import creo.com.driver.utils.Global;
+import creo.com.driver.utils.SessionManager;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -45,19 +46,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class Uploadlicense extends AppCompatActivity {
+public class policeclear extends AppCompatActivity {
     ImageView immm;
     TextView button;
     private int PGALLERY=1,PCAMERA=2;
     String filePath;
     private static final String IMAGE_DIRECTORY = "/driver";
     private Uri uri,ut,up;
-
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_uploadlicense);
+        setContentView(R.layout.activity_policeclear);
 
         requestMultiplePermissions();
 
@@ -78,7 +79,7 @@ public class Uploadlicense extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                uploadToServer(filePath);
+                    uploadToServer(filePath);
 
 
 
@@ -138,26 +139,26 @@ public class Uploadlicense extends AppCompatActivity {
             if (data != null) {
                 Uri contentURI = data.getData();
                 uri=data.getData();
-                filePath = getRealPathFromURIPath(uri, Uploadlicense.this);
+                filePath = getRealPathFromURIPath(uri, policeclear.this);
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     String path = saveImage(bitmap);
-                    Toast.makeText(Uploadlicense.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(policeclear.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                     immm.setImageBitmap(bitmap);
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Toast.makeText(Uploadlicense.this, "Failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(policeclear.this, "Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
 
         }
         if(requestCode == PCAMERA){
-            Toast.makeText(Uploadlicense.this,"elbjuugv",Toast.LENGTH_SHORT).show();
+            Toast.makeText(policeclear.this,"elbjuugv",Toast.LENGTH_SHORT).show();
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             immm.setImageBitmap(thumbnail);
             //  saveImage(thumbnail);
-            Toast.makeText(Uploadlicense.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(policeclear.this, "Image Saved!", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -253,12 +254,12 @@ public class Uploadlicense extends AppCompatActivity {
 
     private void uploadToServer(String filePath) {
         Retrofit retrofit = NetworkClient.getRetrofitClient(this);
-        UploadLice uploadAPI = retrofit.create(UploadLice.class);
+        UploadPcc uploadAPI = retrofit.create(UploadPcc.class);
 
 //        Log.d("url","mmm"+filePath);
         //Create a file object using file path
         if (filePath == null){
-            Toast.makeText(Uploadlicense.this,"Please Upload Image",Toast.LENGTH_SHORT).show();
+            Toast.makeText(policeclear.this,"Please Upload Image",Toast.LENGTH_SHORT).show();
         }
         if (filePath != null) {
             File immm = new File(filePath);
@@ -268,7 +269,7 @@ public class Uploadlicense extends AppCompatActivity {
 
             RequestBody photob = RequestBody.create(MediaType.parse("image/*"), immm);
             // Create MultipartBody.Part using file request-body,file name and part name
-            MultipartBody.Part part1 = MultipartBody.Part.createFormData("license", immm.getName(), photob);
+            MultipartBody.Part part1 = MultipartBody.Part.createFormData("pcc", immm.getName(), photob);
 
 
             //Create request body with text description and text media type
@@ -278,14 +279,15 @@ public class Uploadlicense extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Result> call, Response<Result> response) {
                     String result = response.body().getSuccess();
-                    Toast.makeText(Uploadlicense.this, result, Toast.LENGTH_LONG).show();
+                    Toast.makeText(policeclear.this, result, Toast.LENGTH_LONG).show();
                     if (result.equals("success")) {
-                        Intent intent = new Intent(Uploadlicense.this, Login.class);
+
+                        Intent intent = new Intent(policeclear.this, Login.class);
                         startActivity(intent);
-                        Animatoo.animateSlideLeft(Uploadlicense.this);
+                        Animatoo.animateSlideLeft(policeclear.this);
 
                     } else {
-                        Toast.makeText(Uploadlicense.this, result, Toast.LENGTH_LONG).show();
+                        Toast.makeText(policeclear.this, result, Toast.LENGTH_LONG).show();
 
                     }
 
@@ -293,7 +295,7 @@ public class Uploadlicense extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Result> call, Throwable t) {
-                    Toast.makeText(Uploadlicense.this, "Failed Upload" + t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(policeclear.this, "Failed Upload" + t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -301,4 +303,3 @@ public class Uploadlicense extends AppCompatActivity {
 
 
 }
-

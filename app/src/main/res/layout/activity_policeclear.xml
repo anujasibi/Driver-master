@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Driver's License"
+        android:text="Police Clearence Proof"
         android:id="@+id/head"
         android:layout_marginTop="30dp"
         android:textSize="22sp"
@@ -27,15 +27,15 @@
         android:textColor="#000"
         android:layout_marginStart="20dp"
         android:text="Please choose the document by clicking the icon below"
-       />
+        />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/license"
+        android:layout_height="200dp"
+        android:src="@drawable/police"
         android:id="@+id/photo"
         android:layout_below="@+id/choose"
-       />
+        />
 
     <TextView
         android:layout_width="match_parent"

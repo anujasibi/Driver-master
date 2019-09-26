@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Driver's License"
+        android:text="Photo ID Proof"
         android:id="@+id/head"
         android:layout_marginTop="30dp"
         android:textSize="22sp"
@@ -27,7 +27,7 @@
         android:textColor="#000"
         android:layout_marginStart="20dp"
         android:text="Please choose the document by clicking the icon below"
-       />
+        />
 
     <ImageView
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:src="@drawable/license"
         android:id="@+id/photo"
         android:layout_below="@+id/choose"
-       />
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -44,8 +44,8 @@
         android:textAlignment="center"
         android:gravity="center_vertical"
         android:textColor="#fff"
-        android:textSize="18dp"
         android:id="@+id/button"
+        android:textSize="18dp"
         android:textStyle="bold"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"

@@ -23,7 +23,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Uploadlicense"></activity>
+        <activity android:name=".Approval"></activity>
+        <activity android:name=".policeclear" />
+        <activity android:name=".photoid" />
+        <activity android:name=".vehicledetails" />
+        <activity android:name=".vehicledocument" />
+        <activity android:name=".Uploadlicense" />
         <activity android:name=".Documents" />
         <activity android:name=".registernew" />
         <activity android:name=".verified" />
