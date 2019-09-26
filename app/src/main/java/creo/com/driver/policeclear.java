@@ -61,6 +61,7 @@ public class policeclear extends AppCompatActivity {
         setContentView(R.layout.activity_policeclear);
 
         requestMultiplePermissions();
+        sessionManager = new SessionManager(this);
 
         immm=findViewById(R.id.photo);
 
@@ -263,6 +264,7 @@ public class policeclear extends AppCompatActivity {
         }
         if (filePath != null) {
             File immm = new File(filePath);
+            sessionManager.setUser_pcc(filePath);
             Log.d("mmmmmmm", "mmm" + immm.length());
             // Create a request body with file and image media type
 
@@ -281,10 +283,18 @@ public class policeclear extends AppCompatActivity {
                     String result = response.body().getSuccess();
                     Toast.makeText(policeclear.this, result, Toast.LENGTH_LONG).show();
                     if (result.equals("success")) {
+                        if(sessionManager.getId().equals("")||sessionManager.getLicense().equals("")){
+                            Intent intent = new Intent(policeclear.this, Documents.class);
+                            startActivity(intent);
+                            Animatoo.animateSlideLeft(policeclear.this);
 
-                        Intent intent = new Intent(policeclear.this, Login.class);
-                        startActivity(intent);
-                        Animatoo.animateSlideLeft(policeclear.this);
+                        }
+                        if(!(sessionManager.getUser_pcc().equals("")||sessionManager.getLicense().equals("")||sessionManager.getId().equals(""))){
+//                        Toast.makeText(photoid.this, result, Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(policeclear.this,vehicledocument.class));
+
+                        }
+
 
                     } else {
                         Toast.makeText(policeclear.this, result, Toast.LENGTH_LONG).show();

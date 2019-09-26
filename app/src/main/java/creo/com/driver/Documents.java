@@ -36,7 +36,7 @@ public class Documents extends AppCompatActivity {
         pcc = sessionManager.getUser_pcc();
         Log.d("phone","mm"+pcc);
         Bundle bundlen = getIntent().getExtras();
-        license = bundlen.getString("license");
+        license = sessionManager.getLicense();
         Log.d("phone","mm"+license);
         Bundle bundleP = getIntent().getExtras();
         address_proof = sessionManager.getId();
@@ -56,7 +56,7 @@ public class Documents extends AppCompatActivity {
         else{
             cardv.setVisibility(View.GONE);
         }
-        if(address_proof.equals("")){
+        if(sessionManager.getId().equals("")){
             cardi.setVisibility(View.VISIBLE);
         }
         else{

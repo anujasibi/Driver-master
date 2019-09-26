@@ -37,6 +37,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import creo.com.driver.utils.Global;
+import creo.com.driver.utils.SessionManager;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -52,6 +53,7 @@ public class Uploadlicense extends AppCompatActivity {
     String filePath;
     private static final String IMAGE_DIRECTORY = "/driver";
     private Uri uri,ut,up;
+    SessionManager sessionManager;
 
 
     @Override
@@ -60,6 +62,7 @@ public class Uploadlicense extends AppCompatActivity {
         setContentView(R.layout.activity_uploadlicense);
 
         requestMultiplePermissions();
+        sessionManager = new SessionManager(this);
 
         immm=findViewById(R.id.photo);
 
@@ -262,6 +265,7 @@ public class Uploadlicense extends AppCompatActivity {
         }
         if (filePath != null) {
             File immm = new File(filePath);
+            sessionManager.setLicence(filePath);
             Log.d("mmmmmmm", "mmm" + immm.length());
             // Create a request body with file and image media type
 
@@ -280,9 +284,17 @@ public class Uploadlicense extends AppCompatActivity {
                     String result = response.body().getSuccess();
                     Toast.makeText(Uploadlicense.this, result, Toast.LENGTH_LONG).show();
                     if (result.equals("success")) {
-                        Intent intent = new Intent(Uploadlicense.this, Login.class);
-                        startActivity(intent);
-                        Animatoo.animateSlideLeft(Uploadlicense.this);
+                        if(sessionManager.getId().equals("")||sessionManager.getUser_pcc().equals("")){
+                            Intent intent = new Intent(Uploadlicense.this, Documents.class);
+                            startActivity(intent);
+                            Animatoo.animateSlideLeft(Uploadlicense.this);
+
+                        }
+                        if(!(sessionManager.getUser_pcc().equals("")||sessionManager.getLicense().equals("")||sessionManager.getId().equals(""))){
+//                        Toast.makeText(photoid.this, result, Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(Uploadlicense.this,vehicledocument.class));
+
+                        }
 
                     } else {
                         Toast.makeText(Uploadlicense.this, result, Toast.LENGTH_LONG).show();

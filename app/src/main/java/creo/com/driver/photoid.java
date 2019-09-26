@@ -37,6 +37,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import creo.com.driver.utils.Global;
+import creo.com.driver.utils.SessionManager;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -48,6 +49,7 @@ import retrofit2.Retrofit;
 public class photoid extends AppCompatActivity {
     ImageView immm;
     TextView button;
+    SessionManager sessionManager;
     private int PGALLERY=1,PCAMERA=2;
     String filePath;
     private static final String IMAGE_DIRECTORY = "/driver";
@@ -57,6 +59,7 @@ public class photoid extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photoid);
+        sessionManager = new SessionManager(this);
         requestMultiplePermissions();
 
         immm=findViewById(R.id.photo);
@@ -260,6 +263,7 @@ public class photoid extends AppCompatActivity {
         }
         if (filePath != null) {
             File immm = new File(filePath);
+            sessionManager.setId(filePath);
             Log.d("mmmmmmm", "mmm" + immm.length());
             // Create a request body with file and image media type
 
@@ -277,13 +281,15 @@ public class photoid extends AppCompatActivity {
                 public void onResponse(Call<Result> call, Response<Result> response) {
                     String result = response.body().getSuccess();
                     Toast.makeText(photoid.this, result, Toast.LENGTH_LONG).show();
-                    if (result.equals("success")) {
-                        Intent intent = new Intent(photoid.this, Login.class);
+                    if(sessionManager.getUser_pcc().equals("")||sessionManager.getLicense().equals("")){
+                        Intent intent = new Intent(photoid.this, Documents.class);
                         startActivity(intent);
                         Animatoo.animateSlideLeft(photoid.this);
 
-                    } else {
-                        Toast.makeText(photoid.this, result, Toast.LENGTH_LONG).show();
+                    }
+                    if(!(sessionManager.getUser_pcc().equals("")||sessionManager.getLicense().equals("")||sessionManager.getId().equals(""))){
+//                        Toast.makeText(photoid.this, result, Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(photoid.this,vehicledocument.class));
 
                     }
 
