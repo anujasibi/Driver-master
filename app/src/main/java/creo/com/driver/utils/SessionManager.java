@@ -73,6 +73,57 @@ public class SessionManager {
 
         return  sharedPreferences.getString("color","");
     }
+    public void setRC(String rcbook){
+        sharedPreferences.edit().putString("rcbook",rcbook).commit();
+    }
+    public String getRC(){
+
+        return  sharedPreferences.getString("rcbook","");
+    }
+    public void setPermit(String taxi_permit){
+        sharedPreferences.edit().putString("taxi_permit",taxi_permit).commit();
+    }
+    public String getPermit(){
+
+        return  sharedPreferences.getString("taxi_permit","");
+    }
+    public void setInsurance(String vehicle_insurance){
+        sharedPreferences.edit().putString("vehicle_insurance",vehicle_insurance).commit();
+    }
+    public String getInsurance(){
+
+        return  sharedPreferences.getString("vehicle_insurance","");
+    }
+    public void setTourist(String tourist_permit){
+        sharedPreferences.edit().putString("tourist_permit",tourist_permit).commit();
+    }
+    public String getTourist(){
+
+        return  sharedPreferences.getString("tourist_permit","");
+    }
+    public void setFitness(String vehicle_fitness){
+        sharedPreferences.edit().putString("vehicle_fitness",vehicle_fitness).commit();
+    }
+    public String getFitness(){
+
+        return  sharedPreferences.getString("vehicle_fitness","");
+    }
+    public void setNOC(String noc){
+        sharedPreferences.edit().putString("noc",noc).commit();
+    }
+    public String getNOC(){
+
+        return  sharedPreferences.getString("noc","");
+    }
+    public void setPho(String img){
+        sharedPreferences.edit().putString("img",img).commit();
+    }
+    public String getPho(){
+
+        return  sharedPreferences.getString("img","");
+    }
+
+
 
 
 }

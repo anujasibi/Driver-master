@@ -23,7 +23,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Approval"></activity>
+        <activity android:name=".vechiclephoto"></activity>
+        <activity android:name=".Noc" />
+        <activity android:name=".vehiclefitness" />
+        <activity android:name=".touristpermit" />
+        <activity android:name=".vechicleinsurance" />
+        <activity android:name=".taxipermit" />
+        <activity android:name=".rcbook" />
+        <activity android:name=".Approval" />
         <activity android:name=".policeclear" />
         <activity android:name=".photoid" />
         <activity android:name=".vehicledetails" />

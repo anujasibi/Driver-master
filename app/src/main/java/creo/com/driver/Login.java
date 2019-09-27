@@ -124,6 +124,7 @@ public class Login extends AppCompatActivity {
                             }
 
                         } catch (JSONException e) {
+                            dialog.dismiss();
                             e.printStackTrace();
                         }
                         Log.d("response","hhh"+response);
@@ -185,7 +186,7 @@ public class Login extends AppCompatActivity {
                             final String cab_model=fieldcab.optString("cab_model");
                             final String year=fieldcab.optString("year");
                             final String color=fieldcab.optString("color");
-                            final String car_image=fieldcab.optString("car_image");
+                            final String car_image=fieldcab.optString("img");
                             final String license_plate=fieldcab.optString("license_plate");
                             final String rc_book=fieldcab.optString("rc_book");
                             final String tourist_permit=fieldcab.optString("tourist_permit");
@@ -194,21 +195,33 @@ public class Login extends AppCompatActivity {
                             final String vehicle_fitness=fieldcab.optString("vehicle_fitness");
                             final String noc=fieldcab.optString("noc");
 
+
+                            final String rcbook=fieldcab.optString("rc_book");
+                            final String permit=fieldcab.optString("taxi_permit");
+
                             sessionManager.setMake(make);
                             sessionManager.setModel(cab_model);
                             sessionManager.setColor(color);
                             sessionManager.setYear(year);
                             sessionManager.setPlate(license_plate);
 
+                            sessionManager.setRC(rcbook);
+                            sessionManager.setPermit(permit);
+                            sessionManager.setInsurance(vehicle_insurance);
+                            sessionManager.setTourist(tourist_permit);
+                            sessionManager.setFitness(vehicle_fitness);
+                            sessionManager.setNOC(noc);
+                            sessionManager.setPho(car_image);
+
                             Log.d("json","mm"+jsonObject3);
                             Log.d("fe","mm"+fieldcab);
                             Log.d("make","mm"+make);
+                            Log.d("make","mm"+car_image);
 
 
 
 
                             if(status.equals("200")){
-
                                 if(license.equals("")||address_proof.equals("")||pcc.equals("")){
                                   //  sessionManager.setUser_pcc("");
                                     Toast.makeText(Login.this, ot, Toast.LENGTH_LONG).show();
@@ -235,7 +248,7 @@ public class Login extends AppCompatActivity {
                                     AlertDialog alert = builder.create();
 alert.show();
                                 }
-                                if(make.equals("")||cab_model.equals("")||year.equals("")||color.equals("")||car_image.equals("")||license_plate.equals("")||rc_book.equals("")||tourist_permit.equals("")||vehicle_insurance.equals("")||taxi_permit.equals("")||vehicle_fitness.equals("")||noc.equals("")){
+                                else if(make.equals("")||cab_model.equals("")||year.equals("")||color.equals("")||car_image.equals("")||license_plate.equals("")||rc_book.equals("")||tourist_permit.equals("")||vehicle_insurance.equals("")||taxi_permit.equals("")||vehicle_fitness.equals("")||noc.equals("")){
                                     //  sessionManager.setUser_pcc("");
                                     Toast.makeText(Login.this, ot, Toast.LENGTH_LONG).show();
                                     AlertDialog.Builder builder = new AlertDialog.Builder(context);

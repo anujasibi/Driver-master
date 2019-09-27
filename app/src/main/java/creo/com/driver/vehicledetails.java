@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import creo.com.driver.utils.Global;
+import creo.com.driver.utils.SessionManager;
 
 public class vehicledetails extends AppCompatActivity {
 
@@ -36,11 +37,14 @@ public class vehicledetails extends AppCompatActivity {
     String phone_no = null;
     private String URLline = Global.BASE_URL+"driver/add_cab/";
     private ProgressDialog dialog ;
+    SessionManager sessionManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicledetails);
+        sessionManager = new SessionManager(this);
 
 
         brand=findViewById(R.id.brand);
@@ -55,6 +59,8 @@ public class vehicledetails extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.setMessage("Loading..");
+                dialog.show();
                 uploaddetails();
             }
         });
@@ -73,9 +79,22 @@ public class vehicledetails extends AppCompatActivity {
                             String status=jsonObject.optString("code");
                             Log.d("otp","mm"+ot);
                             if(status.equals("200")){
-                                Toast.makeText(vehicledetails.this, ot, Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(vehicledetails.this, vehicledocument.class);
-                                startActivity(intent);
+                                if(sessionManager.getRC().equals("")||sessionManager.getPermit().equals("")||sessionManager.getInsurance().equals("")||sessionManager.getTourist().equals("")||sessionManager.getFitness().equals("")||sessionManager.getNOC().equals("")||sessionManager.getPho().equals("")) {
+                                    Toast.makeText(vehicledetails.this, ot, Toast.LENGTH_LONG).show();
+                                    sessionManager.setMake(brand.getText().toString());
+                                    sessionManager.setModel(model.getText().toString());
+                                    sessionManager.setYear(year.getText().toString());
+                                    sessionManager.setPlate(plate.getText().toString());
+                                    sessionManager.setColor(color.getText().toString());
+                                    Intent intent = new Intent(vehicledetails.this, vehicledocument.class);
+                                    startActivity(intent);
+                                }
+                                if(!(sessionManager.getRC().equals("")||sessionManager.getPermit().equals("")||sessionManager.getInsurance().equals("")||sessionManager.getTourist().equals("")||sessionManager.getFitness().equals("")||sessionManager.getNOC().equals("")||sessionManager.getPho().equals(""))) {
+
+                                    Intent intent = new Intent(vehicledetails.this, Approval.class);
+                                    startActivity(intent);
+                                }
+
                             }
                             else{
                                 Toast.makeText(vehicledetails.this, "Failed to add."+ot, Toast.LENGTH_LONG).show();

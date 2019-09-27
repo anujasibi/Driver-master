@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -58,6 +59,7 @@ public class Register extends AppCompatActivity {
     TextView button;
     private Uri uri,ut,up;
     String filePath;
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class Register extends AppCompatActivity {
         rcno1=findViewById(R.id.rcno);
         stp1=findViewById(R.id.dtk);
         button=findViewById(R.id.button);
+        dialog=new ProgressDialog(Register.this,R.style.MyAlertDialogStyle);
 
         if(phone1.length()<10) {
             phone1.setError("Enter Valid Phonenumber");
@@ -97,6 +100,8 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                dialog.setMessage("Loading..");
+                dialog.show();
                 uploadToServer(filePath);
             }
         });
@@ -437,6 +442,7 @@ public class Register extends AppCompatActivity {
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response <Result>response) {
+                dialog.dismiss();
                 String result=response.body().getSuccess();
 
                 Toast.makeText(Register.this,"Successfully registered"+result,Toast.LENGTH_LONG).show();
@@ -444,6 +450,7 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(Register.this,"Failed registered"+t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
